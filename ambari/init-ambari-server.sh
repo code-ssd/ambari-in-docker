@@ -13,6 +13,9 @@ cat > /tmp/create_hive.sql <<EOF
 CREATE DATABASE hive;
 CREATE USER hive WITH PASSWORD 'hive';
 GRANT ALL PRIVILEGES ON DATABASE hive TO hive;
+CREATE DATABASE hue;
+CREATE USER hue WITH PASSWORD 'hue';
+GRANT ALL PRIVILEGES ON DATABASE hue TO hue;
 EOF
 chmod +r /tmp/create_hive.sql
 su - postgres -c 'psql -U postgres -f /tmp/create_hive.sql'
