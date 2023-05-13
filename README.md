@@ -1,8 +1,39 @@
 # ambari 2.7.6 in docker
 ## 环境
 centos7 48G内存, 启动完常用组件大约占用了15G内存。
+镜像已经推送到docker-hub(https://hub.docker.com/r/tungshuaishuai/ambari), 准备HDP和bin中的脚本即可。
 
-## 软件包下载
+## 第一次 create cluster
+```
+sh bin/create-cluster.sh
+
+```
+会初始化环境和启动容器
+
+## start/stop cluster
+```
+sh bin/start-cluster.sh
+sh bin/stop-cluster.sh
+```
+
+## 安装ambari安装使用的Repositories
+
+HDP-3.3  HDP-UTILS-1.1.0.22 换成自己的地址
+```
+http://192.168.8.147:8383/3.3.1.0-002
+```
+
+##  添加节点和查看私钥
+```
+# 添加节点 一共三个
+amb-server.hadoop.demo
+amb[1-2].hadoop.demo
+# 私钥
+docker exec -it amb-server cat /root/.ssh/id_rsa
+```
+
+## 构建docker镜像
+### 软件包下载
 HDP 3.3.1.0-002版本从公众号：HiDataPlus 下载。
 或者使用阿里云下载(ambari-in-docker https://www.aliyundrive.com/s/gQXWmpNVC5F  提取码: qd46)我的repo文件夹。
 ```
@@ -30,40 +61,22 @@ unzip_repo.sh
 │   ├── 3.3.1.0-002
 │   │   ├── hdp.repo
 │   │   ├── ....
-│   │   ├── tez
 │   │   └── zookeeper
 │   └── HDP-UTILS
 │       └── centos7
-└── start_repo.sh
+└── unzip_repo.sh
 
 ```
 
-## 启动repo
+### 启动repo
 ```bash
 python -m http.server 8383
 ```
 
 ## build image
-修改`docker file`
-```
-ENV REPO_URL 192.168.8.147:8383
-```
-构建镜像  `sh bin/build.sh`
+修改`docker file` 然后构建镜像
 
 
-
-## 第一次 create cluster
-```
-sh bin/create-cluster.sh
-
-```
-会初始化环境和启动容器
-
-## start/stop cluster
-```
-sh bin/start-cluster.sh
-sh bin/stop-cluster.sh
-```
 
 ## 局域网中的windows访问docker网络
 centos7的ip是192.168.8.147
@@ -73,21 +86,4 @@ route add -p 172.17.0.0 mask 255.255.0.0 192.168.8.147
 
 linux 修改完后一定要重启
 echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
-```
-
-
-## 安装ambari安装使用的Repositories
-
-HDP-3.3  HDP-UTILS-1.1.0.22
-```
-http://192.168.8.147:8383/3.3.1.0-002
-```
-
-##  查看私钥
-```
-docker exec -it amb-server cat /root/.ssh/id_rsa
-
-# 添加节点 一共三个
-amb[1-2].hadoop.demo
-amb-server.hadoop.demo
 ```
