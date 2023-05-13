@@ -5,15 +5,15 @@ centos7 48G内存, 启动完常用组件大约占用了15G内存。
 
 ## 第一次 create cluster
 ```
-sh bin/create-cluster.sh
+cd bin; sh create-cluster.sh
 
 ```
 会初始化环境和启动容器
 
 ## start/stop cluster
 ```
-sh bin/start-cluster.sh
-sh bin/stop-cluster.sh
+cd bin; sh start-cluster.sh
+cd bin; sh stop-cluster.sh
 ```
 
 ## 安装ambari安装使用的Repositories
