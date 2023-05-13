@@ -1,1 +1,0 @@
-cd ambari && docker build --rm -t dss/ambari:2.7.6.3 ./ && cd ..

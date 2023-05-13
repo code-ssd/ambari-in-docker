@@ -1,4 +1,0 @@
-jdk-8u333-linux-x64.tar.gz filter=lfs diff=lfs merge=lfs -text
-postgresql-42.2.14.jar filter=lfs diff=lfs merge=lfs -text
-libpq5-12.3-10PGDG.rhel7.x86_64.rpm filter=lfs diff=lfs merge=lfs -text
-python2-psycopg2-2.8.5-2.rhel7.x86_64.rpm filter=lfs diff=lfs merge=lfs -text

@@ -1,13 +1,12 @@
 # ambari 2.7.6 in docker
-仓库含有大文件，记得安装LFS
 ## 环境
-centos7 48G内存, 启动完常用组件大约占用了14G内存。
+centos7 48G内存, 启动完常用组件大约占用了15G内存。
 
 ## 软件包下载
 HDP 3.3.1.0-002版本从公众号：HiDataPlus 下载。
 或者使用阿里云下载(ambari-in-docker https://www.aliyundrive.com/s/gQXWmpNVC5F  提取码: qd46)我的repo文件夹。
 ```
-ambari-2.7.6.3-2-centos7_8-x86_64.tar.gz
+ambari-2.7.6.3-2-centos7_8-x86_64.tar.gz # 以安装到镜像中，可以不用下载
 HDP-3.3.1.0-002-centos7_8-x86_64.tar.gz
 HDP-UTILS-1.1.0.22-centos7_8-x86_64.tar.gz
 unzip_repo.sh
@@ -70,7 +69,7 @@ sh bin/stop-cluster.sh
 centos7的ip是192.168.8.147
 ```
 windows 添加路由, -p永久 
-route add -p 172.18.0.0 mask 255.255.0.0 192.168.8.147
+route add -p 172.17.0.0 mask 255.255.0.0 192.168.8.147
 
 linux 修改完后一定要重启
 echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
