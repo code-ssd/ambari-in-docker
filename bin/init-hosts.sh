@@ -6,3 +6,6 @@ cat > /etc/hosts <<EOF
 EOF
 
 sshpass -p '123456' ssh-copy-id -o  "StrictHostKeyChecking no" localhost
+sshpass -p '123456' ssh-copy-id -o  "StrictHostKeyChecking no" amb1
+sshpass -p '123456' ssh-copy-id -o  "StrictHostKeyChecking no" amb2
+sshpass -p '123456' ssh-copy-id -o  "StrictHostKeyChecking no" amb-server
