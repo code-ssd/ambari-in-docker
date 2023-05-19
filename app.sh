@@ -53,18 +53,23 @@ function create(){
 function start(){
     echo "执行start"
     docker start amb-server
-    docker exec -it amb-server bash /root/init-hosts.sh
-    docker exec -it amb-server ambari-server start
-    docker exec -it amb-server ambari-agent start
+
     for (( i=1; i<=node_num; i++ ))
     do
         docker start amb$i
+    done
+    docker exec -it amb-server bash /root/init-hosts.sh
+    docker exec -it amb-server ambari-server start
+    docker exec -it amb-server ambari-agent start
+    
+    for (( i=1; i<=node_num; i++ ))
+    do
         docker exec -it amb$i       bash /root/init-hosts.sh
-        docker exec -it amb$i       ambari-agent start
+        docker exec -it amb$i ambari-agent start
     done
 
-
 }
+
 
 
 function stop(){
