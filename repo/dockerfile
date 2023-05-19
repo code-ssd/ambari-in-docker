@@ -1,0 +1,4 @@
+FROM httpd:alpine3.18
+LABEL tungshuaishuai tungshuaishuai@sina.com
+ADD repo/. /usr/local/apache2/htdocs/
+RUN rm -rf /usr/local/apache2/htdocs/index.html

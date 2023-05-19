@@ -1,5 +1,5 @@
 FROM centos:7
-MAINTAINER tungshuaishuai tungshuaishuai@sina.com
+LABEL tungshuaishuai tungshuaishuai@sina.com
 
 RUN yum install epel-release -y && yum install -y systemd* && yum clean all
 
@@ -22,25 +22,19 @@ RUN yum install -y yum-utils yum-plugin-ovl tar wget git curl bind-utils unzip n
 telnet net-tools initscripts sshpass python-pip python-wheel && systemctl enable sshd && systemctl enable ntpd  && yum clean all
 
 
-
-
-ADD init-ambari-server.sh                  /root/init-ambari-server.sh
-ADD init-hosts.sh                          /root/init-hosts.sh
-
-
 RUN echo 'root:123456' | chpasswd
 
 RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N "" && ssh-keygen -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key -N "" \
 && ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N "" && ssh-keygen -t rsa -f /root/.ssh/id_rsa -q -P ""
 
-RUN echo "* soft nofile 1048576" >> /etc/security/limits.conf && echo "* hard nofile 1048576">> /etc/security/limits.conf
+RUN echo "* soft nofile 655350" >> /etc/security/limits.conf && echo "* hard nofile 655350">> /etc/security/limits.conf && echo "vm.max_map_count=262144">>/etc/sysctl.conf
 
-RUN mkdir -p /usr/jdk64 && cd /usr/jdk64 && wget  http://192.168.8.200:8383/jdk-8u333-linux-x64.tar.gz && tar -zxvf jdk-8u333-linux-x64.tar.gz && rm -rf jdk-8u333-linux-x64.tar.gz && cd /root &&  wget  http://192.168.8.200:8383/postgresql-42.2.14.jar
+
+RUN mkdir -p /usr/jdk64 && cd /usr/jdk64 && wget  http://192.168.197.129/jdk-8u333-linux-x64.tar.gz && tar -zxvf jdk-8u333-linux-x64.tar.gz && rm -rf jdk-8u333-linux-x64.tar.gz && cd /root &&  wget  http://192.168.197.129/postgresql-42.2.14.jar
 ENV JAVA_HOME /usr/jdk64/jdk1.8.0_333
 ENV PATH $PATH:$JAVA_HOME/bin
 
-RUN wget -nv http://192.168.8.200:8383/2.7.6.3-2/ambari.repo -O	/etc/yum.repos.d/ambari.repo
-RUN yum install -y ambari-* && yum clean all && rm -rf /etc/yum.repos.d/ambari.repo
-RUN rpm -ivh http://192.168.8.200:8383/python2-psycopg2-2.8.5-2.rhel7.x86_64.rpm && pip install psycopg2-binary==2.8.5
-
+RUN wget -nv http://192.168.197.129/ambari/centos7/2.7.6.3-2/ambari.repo -O	/etc/yum.repos.d/ambari.repo
+RUN yum install -y ambari-server ambari-agent && yum clean all && rm -rf /etc/yum.repos.d/ambari.repo
+RUN rpm -ivh http://192.168.197.129/psycopg2_centos7/python2-psycopg2-2.8.5-2.rhel7.x86_64.rpm && pip install psycopg2-binary==2.8.5
 
