@@ -1,6 +1,6 @@
 # 介绍
 
-ambari docker镜像
+ambari docker镜像,测试环境centos7
 
 ```
 .
